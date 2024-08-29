@@ -131,6 +131,6 @@ const server = new ssh2.Server(
   }
 );
 
-server.listen(2222, () => {
+server.listen(2222, '0.0.0.0', () => {
   console.log('SSH server listening on port 2222');
 });
