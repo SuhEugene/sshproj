@@ -83,9 +83,12 @@ const server = new ssh2.Server(
     hostKeys: [{ key: hostKey, passphrase: process.env.ID_PASSPHRASE }]
   },
   client => {
-    client.on('authentication', ctx => ctx.accept());
+    client.on('authentication', ctx => {
+      console.log('Client with username', ctx.username, 'authenticated.');
+      ctx.accept()
+    });
     client.on('ready', () => {
-      console.log('Client authenticated.');
+      console.log('Client is ready.');
       const clientTermSize: TermSize = { rows: 24, cols: 80 };
       let globStream: ssh2.ServerChannel | null = null;
 
