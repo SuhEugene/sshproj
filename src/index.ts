@@ -1,7 +1,6 @@
 import ssh2 from 'ssh2';
 import dotenv from 'dotenv';
 import { readFileSync } from 'fs';
-import readline from 'readline';
 import {
   moveCursorToX,
   cursorHide,
