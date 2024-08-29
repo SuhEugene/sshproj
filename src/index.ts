@@ -96,7 +96,6 @@ const server = new ssh2.Server(
         const session = accept();
 
         session.on('pty', (_accept, reject, info) => {
-          reject();
           clientTermSize.cols = info.cols;
           clientTermSize.rows = info.rows;
           if (globStream) displayInfo(globStream, clientTermSize);
