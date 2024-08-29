@@ -19,7 +19,8 @@ COPY ./package.json ./pnpm-lock.yaml ./
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile --production
 
 FROM deps AS deploy
-COPY --from=build /app/build /app/build
+COPY --from=build /app/dist /app/dist
+VOLUME ./keys /app/keys
 
 EXPOSE 2222
 
