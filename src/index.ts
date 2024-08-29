@@ -95,6 +95,13 @@ const server = new ssh2.Server(
       client.on('session', accept => {
         const session = accept();
 
+        session.on('pty', (_accept, reject, info) => {
+          reject();
+          clientTermSize.cols = info.cols;
+          clientTermSize.rows = info.rows;
+          if (globStream) displayInfo(globStream, clientTermSize);
+        });
+
         session.on('window-change', (_accept, _reject, info) => {
           clientTermSize.cols = info.cols;
           clientTermSize.rows = info.rows;
