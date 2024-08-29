@@ -1,7 +1,8 @@
 import ssh2 from 'ssh2';
 import dotenv from 'dotenv';
 import { readFileSync } from 'fs';
-import path from 'path';
+import path, { dirname } from 'path';
+import { fileURLToPath } from 'url';
 import {
   moveCursorToX,
   cursorHide,
@@ -73,7 +74,8 @@ function displayInfo(stream: ssh2.ServerChannel, size: TermSize) {
 }
 
 // Read the key from the file
-const hostKey = readFileSync(path.join(__dirname, '../keys/id_rsa'));
+const filePath = fileURLToPath(import.meta.url);
+const hostKey = readFileSync(path.join(dirname(filePath), '../keys/id_rsa'));
 
 // Create a new SSH server
 const server = new ssh2.Server(
