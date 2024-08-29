@@ -22,12 +22,6 @@ interface TermSize {
   cols: number;
 }
 
-function textAlignCenter(stream: ssh2.ServerChannel, size: TermSize, text: string) {
-  const centerX = Math.floor((size.cols - text.length) / 2);
-  moveCursorToX(stream, centerX);
-  stream.write(text);
-}
-
 function blockAlignCenter(stream: ssh2.ServerChannel, size: TermSize, length: number) {
   const centerX = Math.floor((size.cols - length) / 2);
   moveCursorToX(stream, centerX);
