@@ -1,6 +1,7 @@
 import ssh2 from 'ssh2';
 import dotenv from 'dotenv';
 import { readFileSync } from 'fs';
+import readline from 'readline';
 import {
   moveCursorToX,
   cursorHide,
@@ -95,31 +96,18 @@ const server = new ssh2.Server(
       client.on('session', accept => {
         const session = accept();
 
-        session.on('pty', (accept, _reject, info) => {
-          clientTermSize.cols = info.cols;
-          clientTermSize.rows = info.rows;
-          accept();
-        });
-
         session.on('window-change', (_accept, _reject, info) => {
           clientTermSize.cols = info.cols;
           clientTermSize.rows = info.rows;
           if (globStream) displayInfo(globStream, clientTermSize);
         });
 
-        session.on('shell', accept => {
+        session.on('shell', async accept => {
           const stream = accept();
           globStream = stream;
 
           displayInfo(stream, clientTermSize);
-
-          stream.on('data', (data: Buffer) => {
-            const input = data.toString();
-            if (input === 'e') {
-              stream.write('Exiting...\n');
-              stream.end();
-            }
-          });
+          stream.on('data', () => displayInfo(stream, clientTermSize));
 
           stream.on('close', () => {
             clearScreen(stream);
