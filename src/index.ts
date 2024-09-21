@@ -83,7 +83,7 @@ const server = new ssh2.Server(
   (client, info) => {
     client.on('authentication', ctx => {
       if (ctx.username === "root")
-        ctx.reject();
+        return ctx.reject();
 
       console.log('Client with username', ctx.username, 'authenticated.');
       ctx.accept()
