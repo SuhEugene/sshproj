@@ -73,16 +73,15 @@ function displayInfo(stream: ssh2.ServerChannel, size: TermSize) {
   moveCursorTo(stream, 0, size.rows - 1);
 }
 
-// Read the key from the file
 const filePath = fileURLToPath(import.meta.url);
 const hostKey = readFileSync(path.join(dirname(filePath), '../keys/id_rsa'));
 
-// Create a new SSH server
 const server = new ssh2.Server(
   {
     hostKeys: [{ key: hostKey, passphrase: process.env.ID_PASSPHRASE }]
   },
-  client => {
+  (client, info) => {
+    console.log(`Client is connecting: ${info.family} ${info.ip}:${info.port}. Header: ${JSON.stringify(info.header)}`);
     client.on('authentication', ctx => {
       console.log('Client with username', ctx.username, 'authenticated.');
       ctx.accept()
