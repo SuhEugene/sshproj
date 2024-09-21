@@ -81,7 +81,6 @@ const server = new ssh2.Server(
     hostKeys: [{ key: hostKey, passphrase: process.env.ID_PASSPHRASE }]
   },
   (client, info) => {
-    console.log(`Client is connecting: ${info.family} ${info.ip}:${info.port}. Header: ${JSON.stringify(info.header)}`);
     client.on('authentication', ctx => {
       console.log('Client with username', ctx.username, 'authenticated.');
       ctx.accept()
