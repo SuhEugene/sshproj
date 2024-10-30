@@ -32,7 +32,7 @@ function blockAlignCenter(stream: ssh2.ServerChannel, size: TermSize, length: nu
 const lines = 5;
 const username = 'SuhEugene';
 const links = [
-  '168 | Site     | https://suheugene.com',
+  '168 | Site     | https://suheugene.ru',
   '111 | Telegram | https://t.me/suheugene',
   '15  | GitHub   | https://github.com/SuhEugene'
 ];
